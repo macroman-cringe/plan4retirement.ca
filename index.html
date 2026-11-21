@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retirement Planning by the EspressoGeek</title>
+<meta name="description" content="Free Pre-Retirement Cash Flow Workbook for Excel and Google Sheets. Step 1 of retirement planning: find out where your money goes.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-512.png" sizes="512x512" type="image/png">
+<link rel="apple-touch-icon" href="icon-512.png">
+<meta name="theme-color" content="#3B271D">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Plan4Retirement">
+<meta property="og:title" content="Can you afford to retire? Start with your cash flow.">
+<meta property="og:description" content="A free Pre-Retirement Cash Flow Workbook for Excel and Google Sheets, by the EspressoGeek.">
+<meta property="og:url" content="https://plan4retirement.mkultradev.app/">
+<meta property="og:image" content="https://plan4retirement.mkultradev.app/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Caveat:wght@600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --cream:#FAF6F0; --latte:#F1E7DA; --foam:#FFFDF9;
+  --espresso:#3B271D; --roast:#5A3E2F; --muted:#6E5A4D; --line:#E4D7C6;
+  --caramel:#B87333; --green:#2F5D4E; --green-dark:#244A3E;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;font-synthesis:none;background:var(--cream);color:var(--espresso);font:400 16px/1.6 Rubik,system-ui,sans-serif}
+h1,h2,h3{text-wrap:balance;font-family:Rubik,system-ui,sans-serif;line-height:1.2;margin:0 0 .5em;color:var(--espresso);font-weight:600;letter-spacing:-.01em}
+h1{font-size:clamp(1.8rem,3.8vw,2.6rem);font-weight:600}
+h2{font-size:clamp(1.45rem,2.6vw,1.9rem);font-weight:700}
+h3{font-size:1.05rem;font-weight:600}
+p{margin:0 0 1em;text-wrap:pretty}
+img{max-width:100%;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+section{padding:68px 0}
+.kicker{display:flex;align-items:center;gap:10px;font:700 1.3rem/1.1 Caveat,cursive;color:var(--caramel);margin-bottom:10px}
+.kicker svg{width:18px;height:18px;flex:none}
+.muted{color:var(--muted)}
+
+/* Header */
+header{position:sticky;top:0;z-index:20;background:rgba(250,246,240,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:12px}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--espresso);font:700 1.2rem Rubik,system-ui,sans-serif;white-space:nowrap}
+.logo-mark{width:42px;height:42px;border-radius:50%;background:var(--espresso);display:grid;place-items:center}
+.logo-mark svg{width:24px;height:24px}
+.logo small{display:block;font:600 .72rem Rubik,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--caramel)}
+.nav ul{display:flex;gap:30px;list-style:none;margin:0;padding:0}
+.nav ul a{color:var(--roast);text-decoration:none;font-weight:600}
+.nav ul a:hover{color:var(--caramel)}
+@media (max-width:880px){.nav ul{display:none}}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 22px;border-radius:10px;font:600 .95rem Rubik,sans-serif;text-decoration:none;transition:background .15s,transform .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-dark)}
+.btn-light{background:var(--foam);color:var(--espresso)}
+.btn-outline{border:2px solid var(--espresso);color:var(--espresso)}
+.btn-sm{padding:10px 18px;font-size:.95rem;white-space:nowrap}
+@media (max-width:480px){.logo{font-size:1rem}.logo small{display:none}.logo-mark{width:36px;height:36px}header .btn-sm{padding:9px 13px;font-size:.88rem}}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;color:#fff;padding:56px 0 60px;background:radial-gradient(circle at 78% 45%,#5A3B2A 0%,#3B271D 55%,#2E1E16 100%)}
+.hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:32px;align-items:center}
+.hero h1{color:#fff;font-size:clamp(1.7rem,3.2vw,2.5rem)}
+.br-m{display:none}
+@media (max-width:640px){.br-m{display:inline}.hero h1{font-size:1.5rem}.pull{font-size:1.05rem!important;padding-left:14px!important}.timeline li{padding-left:24px!important;margin-left:8px!important}.timeline ul{padding-left:16px!important}.lead{font-size:.95rem!important}}
+.hero .kicker{color:#E7B98A}
+.hero p.lead{font-size:1.02rem;max-width:44ch;color:#F3E9DD}
+.hero .ctas{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+.hero-art svg{display:block;width:100%;height:auto}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr}.hero{padding:44px 0 48px}.hero-art{max-width:520px;margin:0 auto}}
+
+/* Bean divider */
+.beans{display:flex;justify-content:center;gap:14px;padding:6px 0;color:var(--caramel)}
+.beans svg{width:16px;height:16px;opacity:.7}
+
+/* Intro */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center}
+.photo{border-radius:18px;overflow:hidden;box-shadow:0 18px 40px rgba(59,39,29,.18);aspect-ratio:4/3}
+.photo img{width:100%;height:100%;object-fit:cover}
+.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:500;letter-spacing:0;font-variant-numeric:tabular-nums}
+.when .num{font-weight:600}
+.step-badge.num{font-family:"IBM Plex Mono",ui-monospace,monospace;font-weight:600}
+.illo svg{display:block;width:100%;height:100%}
+.pull{font:500 1.35rem/1.5 Rubik,system-ui,sans-serif;color:var(--roast);border-left:4px solid var(--caramel);padding-left:20px;margin:24px 0 0}
+@media (max-width:860px){.split{grid-template-columns:1fr;gap:36px}}
+
+/* Search results panel */
+.search{padding-top:8px}
+.search-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:16px}
+.search-head h2{margin:0 0 4px}
+.search-head p{margin:0}
+.serp{background:var(--foam);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 6px 18px rgba(59,39,29,.07)}
+.searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--line);border-radius:99px;padding:7px 16px;color:var(--muted);font-size:.9rem;max-width:420px;margin-bottom:12px}
+.results{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.res{margin:0;background:#fff;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.res svg{display:block;width:100%;height:auto;border-bottom:1px solid var(--line)}
+.res figcaption{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:4px 8px;font-size:.72rem;color:var(--muted)}
+.res-more{display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;border:1px dashed var(--line);border-radius:8px;color:var(--muted);font-size:.78rem;text-align:center;padding:8px}
+.res-more b{font-size:1.4rem;line-height:1;color:var(--caramel)}
+.serp-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:14px;background:var(--espresso);color:#EADDCD;border-radius:10px;padding:12px 18px}
+.serp-foot span{font-size:.95rem}
+.serp-foot strong{color:#fff;font-weight:600}
+.serp-foot a{color:#E7B98A;font-weight:600;text-decoration:none;white-space:nowrap}
+@media (max-width:900px){.results{grid-template-columns:repeat(4,1fr)}.search-head{display:block}}
+@media (max-width:560px){.results{grid-template-columns:repeat(3,1fr);gap:8px}.serp{padding:10px}.res figcaption{display:none}.res svg{border-bottom:0}}
+
+/* Step 1 */
+.step1{background:var(--latte)}
+.step-badge{display:inline-flex;align-items:center;justify-content:center;width:64px;height:64px;border-radius:50%;background:var(--espresso);color:#fff;font:700 1.6rem Rubik,system-ui,sans-serif;margin-bottom:18px}
+.click{font-weight:700;color:var(--green)}
+.dl-list{display:grid;gap:16px;margin-top:26px}
+.dl{display:flex;align-items:center;gap:18px;background:var(--foam);border:1px solid var(--line);border-radius:14px;padding:20px 22px;text-decoration:none;color:var(--espresso);box-shadow:0 4px 14px rgba(59,39,29,.06);transition:border-color .15s,box-shadow .15s}
+.dl:hover{border-color:var(--green);box-shadow:0 8px 22px rgba(59,39,29,.12)}
+.dl .ic{width:54px;height:54px;border-radius:12px;display:grid;place-items:center;flex:none}
+.dl .ic svg{width:28px;height:28px}
+.ic.xl{background:#E3EFE8;color:#1E6B45}.ic.gs{background:#E5EFE6;color:#188038}
+.dl div{flex:1}
+.dl b{display:block;font:600 1.15rem Rubik,system-ui,sans-serif}
+.dl small{color:var(--muted);font-size:.85rem;white-space:nowrap}
+.step1 .split{grid-template-columns:.85fr 1.15fr}
+@media (max-width:860px){.step1 .split{grid-template-columns:1fr}}
+.dl .go{font-weight:700;color:var(--green);white-space:nowrap}
+@media (max-width:520px){.dl{flex-wrap:wrap}.dl .go{width:100%;padding-left:72px}}
+
+/* Logos */
+img.logo,img.blogo,img.ilogo{display:inline-block}
+.ic img.logo{width:30px;height:30px;object-fit:contain}
+.ic.xl,.ic.gs{background:#fff;border:1px solid var(--line)}
+.lk span.ic{width:64px;height:64px;border-radius:18px;border:0;display:grid;place-items:center;margin-bottom:16px}
+.lk span.ic svg{width:42px;height:42px}
+.ic-green{background:#E3EFE8!important}
+.ic-caramel{background:#F6E7D6!important}
+.ic-red{background:#FBE9E7!important}
+.lk .ic-red img.leaf{width:38px;height:38px;mix-blend-mode:multiply}
+.bank{display:inline-flex;align-items:center;gap:8px;padding:5px 14px 5px 6px!important}
+.bank img.blogo{width:22px;height:22px;border-radius:5px;background:#fff;object-fit:contain}
+img.ilogo{width:16px;height:16px;vertical-align:-3px;margin-right:4px}
+
+/* Links */
+.link-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:34px}
+.lk{display:flex;flex-direction:column;background:var(--foam);border:1px solid var(--line);border-radius:16px;padding:24px;text-decoration:none;color:var(--espresso);transition:border-color .15s,transform .15s}
+.lk:hover{border-color:var(--caramel);transform:translateY(-3px)}
+.lk .ic{width:52px;height:52px;border-radius:50%;background:var(--latte);color:var(--caramel);display:grid;place-items:center;margin-bottom:16px}
+.lk .ic svg{width:26px;height:26px}
+.lk p{color:var(--muted);margin:0 0 14px;flex:1;font-size:.95rem}
+.lk span.more{font-weight:700;color:var(--green)}
+@media (max-width:900px){.link-grid{grid-template-columns:1fr}}
+
+/* Updates */
+.updates{background:var(--espresso);color:#EADDCD}
+.updates h2,.updates h3{color:#fff}
+.updates .kicker{color:#E7B98A}
+.up-grid{display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start}
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{position:relative;padding:0 0 30px 40px;border-left:2px solid rgba(231,185,138,.35);margin-left:10px}
+.timeline li:last-child{padding-bottom:0}
+.timeline li::before{content:"";position:absolute;left:-11px;top:4px;width:20px;height:20px;border-radius:50%;background:var(--espresso);border:3px solid #E7B98A}
+.when{font-weight:700;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;color:#E7B98A}
+.timeline h3{margin:4px 0 8px}
+.timeline p,.timeline li li{color:#D9C9B6}
+.timeline ul{margin:0;padding-left:20px}
+.timeline ul li{border:0;padding:0;margin:0 0 6px}
+.timeline ul li::before{display:none}
+.banks{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.bank{border:1px solid rgba(231,185,138,.5);color:#fff;padding:6px 16px;border-radius:99px;font-weight:600;font-size:.95rem}
+.up-photo{border-radius:18px;overflow:hidden;aspect-ratio:4/5;margin-top:30px}
+.up-photo img{width:100%;height:100%;object-fit:cover}
+@media (max-width:900px){.up-grid{grid-template-columns:1fr;gap:36px}.up-photo{aspect-ratio:16/9}}
+
+/* Contact */
+.contact{display:grid;grid-template-columns:1fr 1fr;background:var(--foam);border:1px solid var(--line);border-radius:22px;overflow:hidden;box-shadow:0 18px 40px rgba(59,39,29,.1)}
+.contact .text{padding:52px}
+.contact-art{background:#EADCCB;display:flex;align-items:center}.contact-art svg{display:block;width:100%;height:100%;min-height:300px}
+.contact .mail{white-space:nowrap}
+@media (max-width:640px){.hide-sm{display:none}.res-cta{grid-column:span 2}.contact .mail{font-size:.95rem;padding:13px 18px}}
+@media (max-width:860px){.contact{grid-template-columns:1fr}.contact .text{padding:34px 24px}.contact-art svg{min-height:0}}
+
+/* Polish */
+a:focus-visible,.btn:focus-visible{outline:3px solid var(--caramel);outline-offset:3px;border-radius:10px}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}html{scroll-behavior:auto}}
+.disclaimer{max-width:none;margin:0 auto 18px;font-size:.82rem;color:var(--muted)}
+footer small{display:inline-block;margin-top:6px;font-size:.8rem}
+footer{padding:40px 16px 52px;color:var(--muted);font-size:.95rem;text-align:center}
+footer a{color:var(--muted)}
+@media (max-width:640px){.wrap{padding:0 16px}section{padding:48px 0}body{font-size:15px}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bean" viewBox="0 0 24 24"><ellipse cx="12" cy="12" rx="7" ry="10" transform="rotate(30 12 12)" fill="currentColor"/><path d="M8 5c4 3 4 11 8 14" stroke="#FAF6F0" stroke-width="1.6" fill="none" transform="rotate(0 12 12)"/></symbol>
+  <symbol id="cup" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V9z"/><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3c0 1.5 1.5 1.5 1.5 3M12 3c0 1.5 1.5 1.5 1.5 3"/></g></symbol>
+  <symbol id="sheet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M4 15h16M10 3v18"/></g></symbol>
+  <symbol id="chat" viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="tax" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2V3z"/><path d="M9 8h6M9 12h6"/></g></symbol>
+  <symbol id="bank" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-5 9 5H3z"/><path d="M5 9v8M10 9v8M14 9v8M19 9v8M3 20h18"/></g></symbol>
+  <symbol id="coin" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M14.5 9.2c-.5-.8-1.5-1.2-2.5-1.2-1.4 0-2.5.8-2.5 2s1.1 1.6 2.5 2 2.5.8 2.5 2-1.1 2-2.5 2c-1 0-2-.4-2.5-1.2M12 6.5V8m0 8v1.5" stroke-linecap="round"/></g></symbol>
+</svg>
+
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#top">
+      <span class="logo-mark" aria-hidden="true"><svg style="color:#F1E7DA"><use href="#cup"/></svg></span>
+      <span>Plan<span class="num">4</span>Retirement<small>by the EspressoGeek</small></span>
+    </a>
+    <nav aria-label="Main"><ul>
+      <li><a href="#step1">Workbook</a></li>
+      <li><a href="#links">Helpful links</a></li>
+      <li><a href="#updates">Updates</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul></nav>
+    <a class="btn btn-green btn-sm" href="#step1">Get the workbook</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="kicker"><svg><use href="#cup"/></svg><span>Retirement planning<span class="hide-sm"> by the EspressoGeek</span></span></div>
+      <h1>Can you afford to retire?<br class="br-d"> Start with your cash flow.</h1>
+      <p class="lead">Find out if you can afford to retire.<br>See where your money goes, for free.</p>
+      <div class="ctas">
+        <a class="btn btn-light" href="#step1">Get the free workbook</a>
+      </div>
+    </div>
+    <div class="hero-art"><svg viewBox="0 0 520 440" role="img" aria-label="Illustration: a cup of coffee whose steam rises into a growth chart, beside a ledger, a calculator and stacks of coins">
+  <circle cx="270" cy="230" r="190" fill="#4A3122"/>
+  <circle cx="270" cy="230" r="140" fill="#553828"/>
+  <!-- ledger sheet -->
+  <g transform="rotate(-8 340 170)">
+    <rect x="270" y="40" width="190" height="240" rx="8" fill="#FFFDF9"/>
+    <rect x="270" y="40" width="190" height="34" rx="8" fill="#2F5D4E"/>
+    <rect x="270" y="62" width="190" height="12" fill="#2F5D4E"/>
+    <rect x="288" y="53" width="80" height="8" rx="4" fill="#CFE3DA"/>
+    <g stroke="#E4D7C6"><path d="M270 100h190M270 126h190M270 152h190M270 178h190M270 204h190M270 230h190M270 256h190M340 74v206M400 74v206"/></g>
+    <g fill="#C9B8A4"><rect x="284" y="85" width="42" height="6" rx="3"/><rect x="284" y="111" width="36" height="6" rx="3"/><rect x="284" y="137" width="46" height="6" rx="3"/><rect x="284" y="163" width="32" height="6" rx="3"/><rect x="284" y="189" width="40" height="6" rx="3"/><rect x="284" y="215" width="38" height="6" rx="3"/></g>
+    <g fill="#E7C2A0"><rect x="352" y="85" width="34" height="6" rx="3"/><rect x="352" y="111" width="28" height="6" rx="3"/><rect x="352" y="137" width="36" height="6" rx="3"/><rect x="352" y="163" width="24" height="6" rx="3"/><rect x="352" y="189" width="32" height="6" rx="3"/><rect x="352" y="215" width="30" height="6" rx="3"/></g>
+    <g fill="#9CC3B4"><rect x="412" y="85" width="34" height="6" rx="3"/><rect x="412" y="111" width="30" height="6" rx="3"/><rect x="412" y="137" width="36" height="6" rx="3"/><rect x="412" y="163" width="26" height="6" rx="3"/><rect x="412" y="189" width="34" height="6" rx="3"/><rect x="412" y="215" width="28" height="6" rx="3"/></g>
+    <rect x="284" y="240" width="60" height="7" rx="3.5" fill="#2F5D4E"/><rect x="408" y="240" width="40" height="7" rx="3.5" fill="#2F5D4E"/>
+  </g>
+  <!-- steam turning into growth chart -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M130 196c-14-18 12-26 0-44" stroke="#C9B09A" stroke-width="5" opacity=".7"/>
+    <path d="M168 190c-14-18 12-26 0-44" stroke="#C9B09A" stroke-width="5" opacity=".7"/>
+    <path d="M150 150 C150 130 170 128 186 116 L214 120 L242 92 L268 98 L304 56" stroke="#E7B98A" stroke-width="6"/>
+  </g>
+  <path d="M304 56 l-22 2 l12 -18 z" fill="#E7B98A" transform="rotate(20 296 50)"/>
+  <g fill="#FFFDF9" stroke="#E7B98A" stroke-width="4"><circle cx="214" cy="120" r="7"/><circle cx="242" cy="92" r="7"/><circle cx="268" cy="98" r="7"/></g>
+  <!-- saucer & cup -->
+  <ellipse cx="150" cy="344" rx="112" ry="22" fill="#2A1A12" opacity=".45"/>
+  <ellipse cx="150" cy="334" rx="108" ry="24" fill="#FFFDF9"/>
+  <ellipse cx="150" cy="331" rx="74" ry="14" fill="#EFE4D6"/>
+  <path d="M78 214h144v62a58 58 0 0 1-58 58h-28a58 58 0 0 1-58-58z" fill="#FFFDF9"/>
+  <path d="M222 232h12a26 26 0 0 1 0 52h-18" fill="none" stroke="#FFFDF9" stroke-width="13"/>
+  <path d="M78 246h144" stroke="#B87333" stroke-width="8"/>
+  <ellipse cx="150" cy="214" rx="72" ry="14" fill="#5A3420"/>
+  <ellipse cx="150" cy="213" rx="62" ry="10" fill="#B87333"/>
+  <path d="M138 210c6-6 18-6 24 0c-6 4-18 4-24 0z" fill="#E7C2A0"/>
+  <!-- coins -->
+  <g stroke="#B88A1E" stroke-width="2">
+    <g fill="#E9B949"><rect x="300" y="352" width="58" height="12" rx="6"/><rect x="300" y="340" width="58" height="12" rx="6"/><rect x="300" y="328" width="58" height="12" rx="6"/></g>
+    <g fill="#E9B949"><rect x="366" y="352" width="58" height="12" rx="6"/><rect x="366" y="340" width="58" height="12" rx="6"/><rect x="366" y="328" width="58" height="12" rx="6"/><rect x="366" y="316" width="58" height="12" rx="6"/><rect x="366" y="304" width="58" height="12" rx="6"/></g>
+    <g fill="#E9B949"><rect x="432" y="352" width="58" height="12" rx="6"/><rect x="432" y="340" width="58" height="12" rx="6"/><rect x="432" y="328" width="58" height="12" rx="6"/><rect x="432" y="316" width="58" height="12" rx="6"/><rect x="432" y="304" width="58" height="12" rx="6"/><rect x="432" y="292" width="58" height="12" rx="6"/><rect x="432" y="280" width="58" height="12" rx="6"/></g>
+  </g>
+  <g transform="translate(461 250)"><circle r="22" fill="#E9B949" stroke="#B88A1E" stroke-width="3"/><circle r="15" fill="none" stroke="#B88A1E" stroke-width="1.5"/><text x="-7" y="8" font-family="Georgia,serif" font-size="22" font-weight="700" fill="#8A6414">$</text></g>
+  <!-- calculator -->
+  <g transform="rotate(10 250 360)">
+    <rect x="214" y="300" width="78" height="104" rx="10" fill="#2F5D4E"/>
+    <rect x="224" y="310" width="58" height="22" rx="4" fill="#CFE3DA"/>
+    <g fill="#FFFDF9" opacity=".9">
+      <rect x="224" y="340" width="12" height="11" rx="3"/><rect x="247" y="340" width="12" height="11" rx="3"/><rect x="270" y="340" width="12" height="11" rx="3" fill="#E7B98A"/>
+      <rect x="224" y="357" width="12" height="11" rx="3"/><rect x="247" y="357" width="12" height="11" rx="3"/><rect x="270" y="357" width="12" height="11" rx="3" fill="#E7B98A"/>
+      <rect x="224" y="374" width="12" height="11" rx="3"/><rect x="247" y="374" width="12" height="11" rx="3"/><rect x="270" y="374" width="12" height="20" rx="3" fill="#E7B98A"/>
+    </g>
+  </g>
+  <!-- beans -->
+  <g fill="#2A1A12">
+    <ellipse cx="40" cy="380" rx="11" ry="7" transform="rotate(-30 40 380)"/><ellipse cx="66" cy="398" rx="11" ry="7" transform="rotate(20 66 398)"/><ellipse cx="22" cy="404" rx="11" ry="7" transform="rotate(60 22 404)"/>
+  </g>
+  <g stroke="#7A5235" stroke-width="2" stroke-linecap="round"><path d="M34 377q6 2 12 6M60 395q6 1 12 6M18 399q4 3 7 9"/></g>
+</svg></div>
+  </div>
+</section>
+
+<section id="intro">
+  <div class="wrap split">
+    <div>
+      <div class="kicker"><svg><use href="#cup"/></svg>The first step</div>
+      <h2>Know what you spend.</h2>
+      <p class="muted">This isn’t a new idea.<br>Search online for a boatload of results.</p>
+      <p class="muted">First, know what your lifestyle costs.<br>In other words, your cash flow.</p>
+      <p class="pull">Dozens of companies can help.<br>Pro or DIY, cash flow comes first.</p>
+    </div>
+    <div class="photo illo"><svg viewBox="0 0 400 300" role="img" aria-label="A cup of espresso beside a household budget sheet and coffee beans">
+      <defs><linearGradient id="wood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C89A6E"/><stop offset="1" stop-color="#A97A4F"/></linearGradient></defs>
+      <rect width="400" height="300" fill="#F1E7DA"/>
+      <rect y="190" width="400" height="110" fill="url(#wood)"/>
+      <path d="M0 214h400M0 246h400M0 278h400" stroke="#9A6C43" stroke-width="1" opacity=".5"/>
+      <g transform="rotate(-6 280 160)">
+        <rect x="220" y="70" width="140" height="170" rx="4" fill="#FFFDF9" stroke="#E4D7C6"/>
+        <text x="236" y="96" font-family="Rubik,system-ui,sans-serif" font-size="14" font-weight="700" fill="#3B271D">Monthly Budget</text>
+        <g font-family="sans-serif" font-size="10" fill="#5A3E2F">
+          <text x="236" y="122">Housing</text><rect x="314" y="117" width="28" height="4" rx="2" fill="#C9B8A4"/>
+          <text x="236" y="142">Groceries</text><rect x="320" y="137" width="18" height="4" rx="2" fill="#C9B8A4"/>
+          <text x="236" y="162">Transport</text><rect x="320" y="157" width="18" height="4" rx="2" fill="#C9B8A4"/>
+          <text x="236" y="182">Coffee</text><rect x="326" y="177" width="14" height="4" rx="2" fill="#C9B8A4"/>
+          <text x="236" y="202">Travel</text><rect x="320" y="197" width="18" height="4" rx="2" fill="#C9B8A4"/>
+        </g>
+        <path d="M236 128h110M236 148h110M236 168h110M236 188h110M236 208h110" stroke="#E4D7C6"/>
+        <text x="236" y="228" font-family="sans-serif" font-size="10" font-weight="700" fill="#2F5D4E">Total</text><rect x="308" y="223" width="28" height="4" rx="2" fill="#2F5D4E"/>
+      </g>
+      <ellipse cx="120" cy="236" rx="78" ry="18" fill="#7A5235" opacity=".35"/>
+      <ellipse cx="120" cy="226" rx="76" ry="20" fill="#FFFDF9" stroke="#E4D7C6"/>
+      <ellipse cx="120" cy="224" rx="52" ry="12" fill="#F1E7DA"/>
+      <path d="M72 150h96v38a40 40 0 0 1-40 40h-16a40 40 0 0 1-40-40z" fill="#FFFDF9" stroke="#E4D7C6" stroke-width="2"/>
+      <path d="M168 164h8a18 18 0 0 1 0 36h-12" fill="none" stroke="#FFFDF9" stroke-width="9"/>
+      <path d="M168 164h8a18 18 0 0 1 0 36h-12" fill="none" stroke="#E4D7C6" stroke-width="2"/>
+      <ellipse cx="120" cy="150" rx="48" ry="10" fill="#5A3420"/>
+      <ellipse cx="120" cy="149" rx="40" ry="7" fill="#B87333" opacity=".85"/>
+      <g fill="none" stroke="#B9A089" stroke-width="3" stroke-linecap="round" opacity=".8">
+        <path d="M104 128c-8-12 8-18 0-30"/><path d="M122 124c-8-12 8-18 0-30"/><path d="M140 128c-8-12 8-18 0-30"/>
+      </g>
+      <g fill="#4A2C1C">
+        <ellipse cx="40" cy="262" rx="9" ry="6" transform="rotate(-30 40 262)"/><ellipse cx="62" cy="276" rx="9" ry="6" transform="rotate(20 62 276)"/>
+        <ellipse cx="208" cy="268" rx="9" ry="6" transform="rotate(-10 208 268)"/><ellipse cx="228" cy="282" rx="9" ry="6" transform="rotate(40 228 282)"/><ellipse cx="190" cy="286" rx="9" ry="6" transform="rotate(-50 190 286)"/>
+      </g>
+      <g stroke="#C89A6E" stroke-width="1.5" stroke-linecap="round"><path d="M35 259q5 2 10 6M57 273q5 1 10 6M203 266q5 1 10 4M223 279q5 2 10 6M186 283q4 2 8 6"/></g>
+      <g transform="translate(310 250)"><circle r="16" fill="#E9B949" stroke="#B88A1E" stroke-width="2"/><text x="-6" y="7" font-family="serif" font-size="18" font-weight="700" fill="#8A6414">$</text></g>
+    </svg></div>
+  </div>
+</section>
+
+<section class="search" aria-labelledby="search-h">
+  <div class="wrap">
+    <div class="search-head">
+      <div>
+        <h2 id="search-h">A boatload of results…</h2>
+        <p class="muted">Spreadsheets, calculators, charts, tables.<br>Each one needs to know what you spend.</p>
+      </div>
+    </div>
+    <div class="serp">
+      <div class="searchbar" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <span>retirement calculator</span>
+      </div>
+      <div class="results">
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Retirement spreadsheet with rows of yearly figures">
+        <rect width="240" height="150" fill="#FFFDF9"/>
+        <rect x="14" y="12" width="90" height="6" rx="2" fill="#B87333"/>
+        <rect x="14" y="24" width="212" height="12" fill="#2F5D4E"/>
+        <g fill="#fff" font-size="7" font-family="sans-serif" font-weight="700"><text x="20" y="33">Age</text><text x="60" y="33">Balance</text><text x="112" y="33">Growth</text><text x="160" y="33">Withdraw</text></g>
+        <g font-size="7" font-family="sans-serif" fill="#5A3E2F">
+          <rect x="20" y="43" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="60" y="43" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="112" y="43" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="160" y="43" width="32" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="56" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="60" y="56" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="112" y="56" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="160" y="56" width="32" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="69" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="60" y="69" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="112" y="69" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="160" y="69" width="32" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="82" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="60" y="82" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="112" y="82" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="160" y="82" width="32" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="95" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="60" y="95" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="112" y="95" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="160" y="95" width="32" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="108" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="60" y="108" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="112" y="108" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="160" y="108" width="32" height="4" rx="2" fill="#C9B8A4"/>
+        </g>
+        <g stroke="#E4D7C6"><path d="M14 52h212M14 65h212M14 78h212M14 91h212M14 104h212M14 117h212"/></g>
+        <rect x="14" y="124" width="212" height="12" fill="#F1E7DA"/>
+      </svg><figcaption>Yearly spreadsheet</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Online savings calculator form with Clear and Calculate buttons">
+        <rect width="240" height="150" fill="#F1E7DA"/>
+        <g font-family="sans-serif" font-size="9" fill="#3B271D">
+          <text x="16" y="28">Starting savings: $</text><rect x="112" y="18" width="110" height="15" rx="2" fill="#fff" stroke="#C9B8A4"/><rect x="117" y="24" width="46" height="4" rx="2" fill="#C9B8A4"/>
+          <text x="16" y="56">Expenses/Withdrawals: $</text><rect x="132" y="46" width="90" height="15" rx="2" fill="#fff" stroke="#C9B8A4"/><rect x="137" y="52" width="37" height="4" rx="2" fill="#C9B8A4"/>
+          <text x="137" y="72" font-size="7" fill="#6E5A4D" font-style="italic">monthly</text>
+          <text x="16" y="96">Annual return:</text><rect x="112" y="86" width="50" height="15" rx="2" fill="#fff" stroke="#C9B8A4"/><rect x="117" y="92" width="14" height="4" rx="2" fill="#C9B8A4"/>
+        </g>
+        <rect x="16" y="116" width="54" height="20" rx="4" fill="#fff" stroke="#C9B8A4"/><text x="31" y="130" font-family="sans-serif" font-size="9" fill="#3B271D">Clear</text>
+        <rect x="150" y="116" width="72" height="20" rx="4" fill="#2F5D4E"/><text x="161" y="130" font-family="sans-serif" font-size="9" fill="#fff" font-weight="700">Calculate</text>
+      </svg><figcaption>Savings calculator</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Chart of investment income rising above annual spending">
+        <rect width="240" height="150" fill="#FFFDF9"/>
+        <path d="M24 120 L24 92 L216 86 L216 120 Z" fill="#C0634A" opacity=".75"/>
+        <path d="M24 92 L216 86 L216 40 C150 58 80 78 24 90 Z" fill="#2F5D4E" opacity=".8"/>
+        <path d="M24 90 C80 78 150 58 216 40" fill="none" stroke="#B87333" stroke-width="2" stroke-dasharray="4 3"/>
+        <path d="M24 20v100h196" fill="none" stroke="#6E5A4D"/>
+        <g font-family="sans-serif" font-size="7" fill="#fff"><text x="160" y="104">annual spending</text><text x="150" y="72">investment income</text></g>
+        <g font-family="sans-serif" font-size="7" fill="#6E5A4D"><rect x="22" y="129" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="70" y="129" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="118" y="129" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="166" y="129" width="12" height="4" rx="2" fill="#C9B8A4"/><rect x="206" y="129" width="12" height="4" rx="2" fill="#C9B8A4"/><text x="110" y="145">Age</text></g>
+        <text x="30" y="30" font-family="serif" font-size="10" font-weight="700" fill="#3B271D">When can I retire?</text>
+      </svg><figcaption>“When can I retire?”</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Annual retirement income table with highlighted figures">
+        <rect width="240" height="150" fill="#FFFDF9"/>
+        <rect x="12" y="14" width="216" height="16" fill="#F1E7DA" stroke="#C9B8A4"/>
+        <rect x="12" y="14" width="26" height="16" fill="#E7B98A"/>
+        <g font-family="sans-serif" font-size="6.5" fill="#3B271D"><rect x="15" y="20" width="18" height="4" rx="2" fill="#C9B8A4"/><rect x="44" y="20" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="80" y="20" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="116" y="20" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="152" y="20" width="37" height="4" rx="2" fill="#C9B8A4"/><rect x="190" y="20" width="37" height="4" rx="2" fill="#C9B8A4"/></g>
+        <g fill="#C9B8A4"><rect x="16" y="42" width="200" height="4" rx="2"/><rect x="16" y="52" width="180" height="4" rx="2"/><rect x="40" y="62" width="150" height="4" rx="2"/></g>
+        <g fill="#2F5D4E"><rect x="70" y="78" width="110" height="3" rx="1.5"/><rect x="60" y="86" width="130" height="3" rx="1.5"/></g>
+        <text x="16" y="108" font-family="sans-serif" font-size="7" fill="#3B271D">Annual income needed:</text><rect x="100" y="100" width="60" height="12" fill="#fff" stroke="#C9B8A4"/>
+        <rect x="16" y="120" width="84" height="16" rx="3" fill="#2F5D4E"/><text x="22" y="131" font-family="sans-serif" font-size="7" fill="#fff" font-weight="700">Calculate my income</text>
+      </svg><figcaption>Income table</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Comparison grid of retirement calculators">
+        <rect width="240" height="150" fill="#FFFDF9"/>
+        <text x="16" y="22" font-family="serif" font-size="11" font-weight="700" fill="#3B271D">Best Retirement Calculators</text>
+        <g fill="#E4D7C6">
+          <rect x="16" y="32" width="208" height="10" fill="#F1E7DA"/>
+        </g>
+        <g fill="#C9B8A4">
+          <rect x="16" y="50" width="60" height="4"/><rect x="90" y="50" width="40" height="4"/><rect x="144" y="50" width="30" height="4"/><rect x="190" y="50" width="28" height="4" fill="#2F5D4E"/>
+          <rect x="16" y="64" width="54" height="4"/><rect x="90" y="64" width="44" height="4"/><rect x="144" y="64" width="26" height="4"/><rect x="190" y="64" width="28" height="4" fill="#2F5D4E"/>
+          <rect x="16" y="78" width="66" height="4"/><rect x="90" y="78" width="36" height="4"/><rect x="144" y="78" width="32" height="4"/><rect x="190" y="78" width="20" height="4" fill="#B87333"/>
+          <rect x="16" y="92" width="50" height="4"/><rect x="90" y="92" width="42" height="4"/><rect x="144" y="92" width="28" height="4"/><rect x="190" y="92" width="28" height="4" fill="#2F5D4E"/>
+          <rect x="16" y="106" width="62" height="4"/><rect x="90" y="106" width="38" height="4"/><rect x="144" y="106" width="30" height="4"/><rect x="190" y="106" width="14" height="4" fill="#C0634A"/>
+          <rect x="16" y="120" width="56" height="4"/><rect x="90" y="120" width="40" height="4"/><rect x="144" y="120" width="24" height="4"/><rect x="190" y="120" width="20" height="4" fill="#B87333"/>
+        </g>
+        
+      </svg><figcaption>“Best of” lists</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Calculator with input fields and a rising savings bar chart">
+        <rect width="240" height="150" fill="#FFFDF9"/>
+        <g font-family="sans-serif" font-size="6.5" fill="#3B271D">
+          <text x="14" y="24">Current age</text><text x="14" y="42">Retirement age</text><text x="14" y="60">Savings today</text><text x="14" y="78">Monthly saving</text><text x="14" y="96">Return</text>
+        </g>
+        <g fill="#fff" stroke="#C9B8A4"><rect x="62" y="17" width="32" height="10"/><rect x="62" y="35" width="32" height="10"/><rect x="62" y="53" width="32" height="10"/><rect x="62" y="71" width="32" height="10"/><rect x="62" y="89" width="32" height="10"/></g>
+        <g fill="#2F5D4E">
+          <rect x="110" y="118" width="5" height="10"/><rect x="117" y="116" width="5" height="12"/><rect x="124" y="113" width="5" height="15"/><rect x="131" y="110" width="5" height="18"/><rect x="138" y="106" width="5" height="22"/><rect x="145" y="102" width="5" height="26"/><rect x="152" y="97" width="5" height="31"/><rect x="159" y="91" width="5" height="37"/><rect x="166" y="85" width="5" height="43"/><rect x="173" y="78" width="5" height="50"/><rect x="180" y="70" width="5" height="58"/><rect x="187" y="61" width="5" height="67"/><rect x="194" y="51" width="5" height="77"/><rect x="201" y="40" width="5" height="88"/><rect x="208" y="28" width="5" height="100"/><rect x="215" y="16" width="5" height="112"/>
+        </g>
+        <path d="M106 128h118" stroke="#6E5A4D"/>
+      </svg><figcaption>Growth projection</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Spreadsheet of investment inputs: initial amount, monthly savings, years, interest rate">
+        <rect width="240" height="150" fill="#FFFDF9"/>
+        <rect x="0" y="0" width="240" height="18" fill="#F1E7DA"/>
+        <text x="8" y="12" font-family="sans-serif" font-size="7" fill="#6E5A4D">fx</text>
+        <rect x="24" y="4" width="54" height="10" fill="#E7B98A"/><rect x="28" y="7" width="32" height="4" rx="2" fill="#C9B8A4"/>
+        <rect x="12" y="28" width="216" height="16" fill="#2F5D4E"/>
+        <g font-family="sans-serif" font-size="7.5" font-weight="700" fill="#fff"><text x="16" y="39">No.</text><text x="70" y="39">Particulars</text><text x="182" y="39">Amount</text></g>
+        <g font-family="sans-serif" font-size="7.5" fill="#3B271D">
+          <rect x="20" y="53" width="12" height="4" rx="2" fill="#C9B8A4"/><text x="40" y="58">Initial amount</text><rect x="182" y="53" width="32" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="71" width="12" height="4" rx="2" fill="#C9B8A4"/><text x="40" y="76">Monthly savings</text><rect x="190" y="71" width="18" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="89" width="12" height="4" rx="2" fill="#C9B8A4"/><text x="40" y="94">Years invested</text><rect x="198" y="89" width="12" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="107" width="12" height="4" rx="2" fill="#C9B8A4"/><text x="40" y="112">Rate of interest per year</text><rect x="190" y="107" width="23" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="20" y="125" width="12" height="4" rx="2" fill="#C9B8A4"/><text x="40" y="130" font-weight="700">Value at retirement</text><rect x="172" y="125" width="37" height="4" rx="2" fill="#2F5D4E"/>
+        </g>
+        <g stroke="#E4D7C6"><path d="M12 64h216M12 82h216M12 100h216M12 118h216M12 136h216M34 44v92M160 44v92"/></g>
+      </svg><figcaption>Investment worksheet</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Table of retirement withdrawals before and after taxes">
+        <rect width="240" height="150" fill="#FFFDF9"/>
+        <rect x="12" y="10" width="216" height="26" fill="#3B271D"/>
+        <g font-family="sans-serif" font-size="6" font-weight="700" fill="#F1E7DA"><text x="18" y="21">WITHDRAWAL</text><text x="18" y="30">BEFORE TAXES</text><text x="92" y="21">WITHDRAWAL</text><text x="92" y="30">AFTER TAXES</text><text x="168" y="21">WITHDRAWAL</text><text x="168" y="30">RATE</text></g>
+        <g font-family="sans-serif" font-size="7" fill="#3B271D">
+          <rect x="18" y="45" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="92" y="45" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="168" y="45" width="23" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="18" y="59" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="92" y="59" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="168" y="59" width="23" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="18" y="73" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="92" y="73" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="168" y="73" width="23" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="18" y="87" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="92" y="87" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="168" y="87" width="23" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="18" y="101" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="92" y="101" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="168" y="101" width="23" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="18" y="115" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="92" y="115" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="168" y="115" width="23" height="4" rx="2" fill="#C9B8A4"/>
+          <rect x="18" y="129" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="92" y="129" width="32" height="4" rx="2" fill="#C9B8A4"/><rect x="168" y="129" width="23" height="4" rx="2" fill="#C9B8A4"/>
+        </g>
+        <g fill="#F1E7DA" opacity=".6"><rect x="12" y="54" width="216" height="14"/><rect x="12" y="82" width="216" height="14"/><rect x="12" y="110" width="216" height="14"/></g>
+      </svg><figcaption>Withdrawal table</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Retirement calculator banner with a gold coin">
+        <rect width="240" height="150" fill="#B87333"/>
+        <circle cx="210" cy="20" r="70" fill="#C98544"/>
+        <text x="16" y="70" font-family="Rubik,system-ui,sans-serif" font-size="25" font-weight="700" fill="#FFFDF9">RETIREMENT</text>
+        <text x="16" y="100" font-family="Rubik,system-ui,sans-serif" font-size="25" font-weight="700" fill="#FFFDF9">CALCULATOR</text>
+        <circle cx="206" cy="32" r="20" fill="#E9B949" stroke="#B88A1E" stroke-width="3"/>
+        <text x="199" y="40" font-family="serif" font-size="20" font-weight="700" fill="#8A6414">$</text>
+        <path d="M160 150 L190 118 L230 130 L240 150 Z" fill="#E7C2A0" opacity=".7"/>
+        <path d="M168 132 L214 104" stroke="#3B271D" stroke-width="3" stroke-linecap="round"/>
+      </svg><figcaption>Calculator guide</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Two overlapping retirement calculator worksheets">
+        <rect width="240" height="150" fill="#F1E7DA"/>
+        <g transform="rotate(-4 80 80)">
+          <rect x="18" y="16" width="120" height="128" fill="#fff" stroke="#C9B8A4"/>
+          <rect x="18" y="16" width="120" height="12" fill="#2F5D4E"/><text x="22" y="25" font-family="sans-serif" font-size="6" fill="#fff">Retirement Calculator</text>
+          <g fill="#C9B8A4"><rect x="24" y="36" width="50" height="3"/><rect x="24" y="44" width="40" height="3"/><rect x="24" y="52" width="56" height="3"/><rect x="24" y="60" width="44" height="3"/><rect x="24" y="68" width="50" height="3"/></g>
+          <g fill="#E3EFE8"><rect x="90" y="34" width="40" height="7"/><rect x="90" y="42" width="40" height="7"/><rect x="90" y="50" width="40" height="7"/></g>
+          <path d="M28 130 C50 120 70 100 128 86" stroke="#B87333" fill="none" stroke-width="1.5"/>
+        </g>
+        <g transform="rotate(3 170 80)">
+          <rect x="106" y="20" width="120" height="122" fill="#fff" stroke="#C9B8A4"/>
+          <rect x="106" y="20" width="120" height="12" fill="#3B271D"/><text x="110" y="29" font-family="sans-serif" font-size="6" fill="#fff">Savings Calculator</text>
+          <g fill="#C9B8A4"><rect x="112" y="40" width="44" height="3"/><rect x="112" y="48" width="52" height="3"/><rect x="112" y="56" width="38" height="3"/><rect x="112" y="64" width="48" height="3"/></g>
+          <g fill="#E3EFE8"><rect x="176" y="38" width="42" height="7"/><rect x="176" y="46" width="42" height="7"/><rect x="176" y="54" width="42" height="7"/><rect x="176" y="62" width="42" height="7"/></g>
+          <g fill="#2F5D4E"><rect x="118" y="120" width="8" height="12"/><rect x="132" y="112" width="8" height="20"/><rect x="146" y="104" width="8" height="28"/><rect x="160" y="96" width="8" height="36"/><rect x="174" y="86" width="8" height="46"/><rect x="188" y="76" width="8" height="56"/><rect x="202" y="84" width="8" height="48" fill="#B87333"/></g>
+        </g>
+      </svg><figcaption>Templates</figcaption></figure>
+        <figure class="res"><svg viewBox="0 0 240 150" role="img" aria-label="Retirement savings calculator with coin stacks and growing plants">
+        <rect width="240" height="150" fill="#EEF2EC"/>
+        <g font-family="Rubik,system-ui,sans-serif" font-weight="700" fill="#2F5D4E" font-size="17"><text x="14" y="50">Retirement</text><text x="14" y="74">Savings</text><text x="14" y="98">Calculator</text></g>
+        <g fill="#E9B949" stroke="#B88A1E" stroke-width="1">
+          <rect x="150" y="124" width="22" height="5" rx="2.5"/><rect x="150" y="118" width="22" height="5" rx="2.5"/>
+          <rect x="178" y="124" width="22" height="5" rx="2.5"/><rect x="178" y="118" width="22" height="5" rx="2.5"/><rect x="178" y="112" width="22" height="5" rx="2.5"/><rect x="178" y="106" width="22" height="5" rx="2.5"/>
+          <rect x="206" y="124" width="22" height="5" rx="2.5"/><rect x="206" y="118" width="22" height="5" rx="2.5"/><rect x="206" y="112" width="22" height="5" rx="2.5"/><rect x="206" y="106" width="22" height="5" rx="2.5"/><rect x="206" y="100" width="22" height="5" rx="2.5"/><rect x="206" y="94" width="22" height="5" rx="2.5"/>
+        </g>
+        <g stroke="#4F8A3C" stroke-width="2" fill="none"><path d="M161 118v-14"/><path d="M189 106v-22"/><path d="M217 94v-34"/></g>
+        <g fill="#6BAA4B">
+          <path d="M161 106c-8-2-10-8-10-8s7-1 10 6z"/><path d="M161 108c6-4 12-3 12-3s-3 6-12 5z"/>
+          <path d="M189 88c-9-3-11-10-11-10s8-1 11 8z"/><path d="M189 92c7-5 14-4 14-4s-4 7-14 6z"/>
+          <path d="M217 66c-10-3-12-12-12-12s9-1 12 10z"/><path d="M217 72c8-6 16-5 16-5s-4 8-16 7z"/><path d="M217 62c2-8 8-12 8-12s2 8-6 13z"/>
+        </g>
+        <path d="M0 132h240" stroke="#C9D3C4" stroke-width="2"/>
+      </svg><figcaption>Savings calculator</figcaption></figure>
+        <div class="res-more" aria-hidden="true"><b>…</b>and many more</div>
+      </div>
+      <div class="serp-foot">
+        <span>…but they all ask the same question:<br><strong>How much do you spend?</strong></span>
+        <a href="#step1">That’s Step <span class="num">1</span> ↓</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="beans" aria-hidden="true"><svg><use href="#bean"/></svg><svg><use href="#bean"/></svg><svg><use href="#bean"/></svg></div>
+
+<section class="step1" id="step1">
+  <div class="wrap split">
+    <div class="photo illo"><svg viewBox="0 0 400 300" role="img" aria-label="Illustration: a laptop showing a cash-flow workbook, next to a mug of coffee and a small stack of coins">
+  <rect width="400" height="300" fill="#EADCCB"/>
+  <rect y="222" width="400" height="78" fill="#C89A6E"/>
+  <path d="M0 246h400M0 272h400" stroke="#A97A4F" opacity=".5"/>
+  <!-- laptop -->
+  <rect x="60" y="40" width="230" height="150" rx="10" fill="#3B271D"/>
+  <rect x="70" y="50" width="210" height="130" rx="4" fill="#FFFDF9"/>
+  <rect x="70" y="50" width="210" height="18" rx="4" fill="#2F5D4E"/><rect x="70" y="62" width="210" height="6" fill="#2F5D4E"/>
+  <rect x="80" y="56" width="70" height="6" rx="3" fill="#CFE3DA"/>
+  <g stroke="#E4D7C6"><path d="M70 86h112M70 102h112M70 118h112M70 134h112M70 150h112M70 166h112M126 68v112"/></g>
+  <g fill="#C9B8A4"><rect x="78" y="76" width="38" height="5" rx="2.5"/><rect x="78" y="92" width="30" height="5" rx="2.5"/><rect x="78" y="108" width="40" height="5" rx="2.5"/><rect x="78" y="124" width="26" height="5" rx="2.5"/><rect x="78" y="140" width="34" height="5" rx="2.5"/><rect x="78" y="156" width="30" height="5" rx="2.5"/></g>
+  <g fill="#E7C2A0"><rect x="134" y="76" width="36" height="5" rx="2.5"/><rect x="134" y="92" width="28" height="5" rx="2.5"/><rect x="134" y="108" width="34" height="5" rx="2.5"/><rect x="134" y="124" width="24" height="5" rx="2.5"/><rect x="134" y="140" width="32" height="5" rx="2.5"/><rect x="134" y="156" width="26" height="5" rx="2.5"/></g>
+  <!-- donut chart -->
+  <g transform="translate(232 112)" fill="none" stroke-width="16">
+    <circle r="30" stroke="#2F5D4E" stroke-dasharray="80 109"/>
+    <circle r="30" stroke="#B87333" stroke-dasharray="50 139" stroke-dashoffset="-80"/>
+    <circle r="30" stroke="#E7C2A0" stroke-dasharray="35 154" stroke-dashoffset="-130"/>
+    <circle r="30" stroke="#C0634A" stroke-dasharray="24 165" stroke-dashoffset="-165"/>
+  </g>
+  <g fill="#C9B8A4"><rect x="200" y="156" width="64" height="5" rx="2.5"/><rect x="210" y="166" width="44" height="5" rx="2.5"/></g>
+  <path d="M40 190h270l-14 16H54z" fill="#5A3E2F"/>
+  <rect x="150" y="190" width="50" height="5" rx="2" fill="#3B271D"/>
+  <!-- mug -->
+  <ellipse cx="338" cy="232" rx="40" ry="8" fill="#7A5235" opacity=".45"/>
+  <path d="M306 160h64v52a20 20 0 0 1-20 20h-24a20 20 0 0 1-20-20z" fill="#2F5D4E"/>
+  <path d="M370 172h6a14 14 0 0 1 0 28h-8" fill="none" stroke="#2F5D4E" stroke-width="7"/>
+  <ellipse cx="338" cy="160" rx="32" ry="7" fill="#5A3420"/>
+  <rect x="318" y="186" width="40" height="14" rx="3" fill="#CFE3DA"/>
+  <text x="326" y="197" font-family="Georgia,serif" font-size="11" font-weight="700" fill="#2F5D4E">$</text>
+  <g fill="none" stroke="#B9A089" stroke-width="3" stroke-linecap="round" opacity=".8"><path d="M328 146c-6-9 6-13 0-22"/><path d="M346 146c-6-9 6-13 0-22"/></g>
+  <!-- coins -->
+  <g fill="#E9B949" stroke="#B88A1E" stroke-width="1.5"><rect x="60" y="250" width="40" height="9" rx="4.5"/><rect x="60" y="241" width="40" height="9" rx="4.5"/><rect x="60" y="232" width="40" height="9" rx="4.5"/><rect x="106" y="250" width="40" height="9" rx="4.5"/><rect x="106" y="241" width="40" height="9" rx="4.5"/></g>
+  <g fill="#2A1A12"><ellipse cx="220" cy="258" rx="8" ry="5" transform="rotate(-25 220 258)"/><ellipse cx="240" cy="270" rx="8" ry="5" transform="rotate(30 240 270)"/></g>
+</svg></div>
+    <div>
+      <span class="step-badge num">1</span>
+      <h2>Where does the money go?</h2>
+      <p class="muted">Find out if you can afford to retire.<br>This workbook can help.</p>
+      <p class="click">Choose your version:</p>
+      <div class="dl-list">
+        <a class="dl" href="https://drive.google.com/uc?export=download&amp;id=1AM6Ay5uGMjINgffi-m_KE7bgzwKdE84O" rel="noopener">
+          <span class="ic xl"><img class="logo" src="logos/excel.png" alt="" width="28" height="28"></span>
+          <div><b>Excel workbook</b><small>Downloads the .xlsx file</small></div>
+          <span class="go">Download ↓</span>
+        </a>
+        <a class="dl" href="https://docs.google.com/spreadsheets/d/10M0kb2HQjboUoelXZ2YnzORGQ4e60CQBBsPCbjkewjw/copy" target="_blank" rel="noopener">
+          <span class="ic gs"><img class="logo" src="logos/sheets.png" alt="" width="28" height="28"></span>
+          <div><b>Google Sheets workbook</b><small>Saves a copy to your Google Drive</small></div>
+          <span class="go">Make a copy →</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="links">
+  <div class="wrap">
+    <div class="kicker"><svg><use href="#cup"/></svg>Helpful links</div>
+    <h2>More resources</h2>
+    <div class="link-grid">
+      <a class="lk" href="https://forms.gle/Vuq1sv5ct6azpCW6A" target="_blank" rel="noopener">
+        <span class="ic ic-green"><svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M6 10a5 5 0 0 1 5-5h20a5 5 0 0 1 5 5v13a5 5 0 0 1-5 5H17l-7 6v-6.3A5 5 0 0 1 6 23z" fill="#2F5D4E"/>
+          <circle cx="14" cy="16.5" r="2.2" fill="#E7B98A"/><circle cx="21" cy="16.5" r="2.2" fill="#E7B98A"/><circle cx="28" cy="16.5" r="2.2" fill="#E7B98A"/>
+          <path d="M26 22h15a4 4 0 0 1 4 4v9a4 4 0 0 1-4 4h-1v6l-6.5-6H26a4 4 0 0 1-4-4v-9a4 4 0 0 1 4-4z" fill="#B87333" stroke="#E3EFE8" stroke-width="2.5" stroke-linejoin="round"/>
+          <path d="M33.5 24.8l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#FFFDF9"/>
+        </svg></span>
+        <h3>Send feedback</h3>
+        <p>Ideas for what comes next.</p>
+        <span class="more">Open the form →</span>
+      </a>
+      <a class="lk" href="https://www.taxtips.ca" target="_blank" rel="noopener">
+        <span class="ic ic-caramel"><svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M10 5h22l6 6v32l-4-3-4 3-4-3-4 3-4-3-4 3-4-3z" fill="#FFFDF9" stroke="#5A3E2F" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M32 5v6h6" fill="none" stroke="#5A3E2F" stroke-width="2" stroke-linejoin="round"/>
+          <path d="M15 15h10M15 21h14M15 27h8" stroke="#C9B8A4" stroke-width="2.5" stroke-linecap="round"/>
+          <circle cx="33" cy="33" r="10" fill="#E9B949" stroke="#B88A1E" stroke-width="2"/>
+          <text x="33" y="38.5" text-anchor="middle" font-family="Georgia,serif" font-size="14" font-weight="700" fill="#8A6414">$</text>
+        </svg></span>
+        <h3>TaxTips.ca</h3>
+        <p>One-stop guide to income tax.</p>
+        <span class="more">Visit TaxTips.ca →</span>
+      </a>
+      <a class="lk" href="https://www.canada.ca/en/financial-consumer-agency/services/banking/open-banking.html" target="_blank" rel="noopener">
+        <span class="ic ic-red"><img class="logo leaf" src="logos/canada.jpg" alt="" width="34" height="34"></span>
+        <h3>Open Banking in Canada</h3>
+        <p>What it means for you.</p>
+        <span class="more">Visit Canada.ca →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="updates" id="updates">
+  <div class="wrap up-grid">
+    <div>
+      <div class="kicker"><svg><use href="#cup"/></svg>Latest project updates</div>
+      <h2>What’s brewing</h2>
+      <p>The workbook is a work in progress.<br>Your feedback shapes what comes next.</p>
+      <div class="up-photo illo"><svg viewBox="0 0 320 400" role="img" aria-label="A project notebook with a to-do list, a pen and a cup of coffee">
+        <rect width="320" height="400" fill="#4A3226"/>
+        <path d="M0 80h320M0 170h320M0 260h320M0 350h320" stroke="#3B271D" stroke-width="2"/>
+        <g transform="rotate(-5 150 200)">
+          <rect x="40" y="70" width="200" height="270" rx="6" fill="#FFFDF9"/>
+          <rect x="40" y="70" width="18" height="270" fill="#E7B98A"/>
+          <g fill="#C9B8A4"><circle cx="49" cy="100" r="3"/><circle cx="49" cy="150" r="3"/><circle cx="49" cy="200" r="3"/><circle cx="49" cy="250" r="3"/><circle cx="49" cy="300" r="3"/></g>
+          <text x="74" y="106" font-family="Rubik,system-ui,sans-serif" font-size="17" font-weight="700" fill="#3B271D">Project to-do</text>
+          <path d="M74 114h120" stroke="#B87333" stroke-width="2"/>
+          <g font-family="sans-serif" font-size="12" fill="#5A3E2F">
+            <rect x="74" y="134" width="13" height="13" rx="2" fill="#2F5D4E"/><path d="M77 140l3 3 5-6" stroke="#fff" stroke-width="2" fill="none"/><text x="96" y="145">Google version</text>
+            <rect x="74" y="166" width="13" height="13" rx="2" fill="none" stroke="#B87333" stroke-width="2"/><text x="96" y="177">Debit/credit tags</text>
+            <rect x="74" y="198" width="13" height="13" rx="2" fill="none" stroke="#B87333" stroke-width="2"/><text x="96" y="209">Choose entries</text>
+            <rect x="74" y="230" width="13" height="13" rx="2" fill="none" stroke="#B87333" stroke-width="2"/><text x="96" y="241">Training videos</text>
+            <rect x="74" y="262" width="13" height="13" rx="2" fill="none" stroke="#C9B8A4" stroke-width="2"/><text x="96" y="273" fill="#8C7A6C">Excel (<tspan font-family="IBM Plex Mono,monospace">2027</tspan>)</text>
+          </g>
+          <path d="M74 300h140M74 318h100" stroke="#E4D7C6"/>
+        </g>
+        <g transform="rotate(28 250 270)"><rect x="244" y="170" width="10" height="150" rx="3" fill="#2F5D4E"/><path d="M244 320l5 16 5-16z" fill="#E7B98A"/><rect x="244" y="170" width="10" height="16" fill="#B87333"/></g>
+        <circle cx="258" cy="66" r="50" fill="#2A1A12" opacity=".45"/>
+        <circle cx="254" cy="60" r="48" fill="#FFFDF9" stroke="#E4D7C6"/>
+        <circle cx="254" cy="60" r="34" fill="#F1E7DA"/>
+        <rect x="282" y="52" width="26" height="14" rx="7" fill="#FFFDF9" stroke="#E4D7C6"/>
+        <circle cx="254" cy="60" r="30" fill="#FFFDF9" stroke="#E4D7C6" stroke-width="2"/>
+        <circle cx="254" cy="60" r="24" fill="#5A3420"/>
+        <path d="M254 48c-8 0-12 8-6 12s8 10 6 14c10-2 14-10 8-16s-4-9-8-10z" fill="#E7C2A0" opacity=".9"/>
+        <circle cx="300" cy="380" r="7" fill="#2A1A12"/><circle cx="20" cy="40" r="6" fill="#2A1A12"/>
+      </svg></div>
+    </div>
+    <ol class="timeline">
+      <li>
+        <span class="when">November <span class="num">2026</span></span>
+        <h3>Focused on the Google version</h3>
+        <p>Improving the free Google version.</p>
+      </li>
+      <li>
+        <span class="when">December <span class="num">2026</span> (expected)</span>
+        <h3>A new version is coming</h3>
+        <ul>
+          <li>A simple debit/credit indicator</li>
+          <li>Choose which entries to include</li>
+        </ul>
+      </li>
+      <li>
+        <span class="when">Training videos</span>
+        <h3>Step-by-step setup</h3>
+        <p style="margin-bottom:6px">Training videos will walk you through:</p>
+        <ul style="margin-bottom:10px">
+          <li><b>RetirementPlannerCashFlow</b> setup</li>
+          <li>Google Drive folder for bank files</li>
+          <li>Examples for supported banks:</li>
+        </ul>
+        <div class="banks"><span class="bank"><img class="blogo" src="logos/td.png" alt="" width="28" height="28">TD</span><span class="bank"><img class="blogo" src="logos/tangerine.png" alt="" width="28" height="28">Tangerine</span><span class="bank"><img class="blogo" src="logos/neo.png" alt="" width="28" height="28">Neo</span></div>
+      </li>
+      <li>
+        <span class="when">Please note</span>
+        <h3>You’ll need a Google account</h3>
+        <p>Google accounts are free.<br>Use Gmail? You already have one.<br>Prefer Excel? It’s coming in <span class="num">2027</span>.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact">
+      <div class="text">
+        <div class="kicker"><svg><use href="#cup"/></svg>Questions?</div>
+        <h2>Let’s talk over a coffee.</h2>
+        <p class="muted">Want more info or have an idea?<br>We’d love to hear from you.</p>
+        <a class="btn btn-green mail" data-u="theespressogeek" data-d="gmail.com" href="https://forms.gle/Vuq1sv5ct6azpCW6A">Send us a message</a>
+      </div>
+      <div class="contact-art"><svg viewBox="0 0 400 320" role="img" aria-label="Illustration: a cup of coffee beside an envelope and a handwritten note">
+  <rect width="400" height="320" fill="#EADCCB"/>
+  <circle cx="300" cy="80" r="110" fill="#E3D2BE"/>
+  <!-- envelope -->
+  <g transform="rotate(-8 200 170)">
+    <rect x="120" y="90" width="210" height="140" rx="8" fill="#FFFDF9"/>
+    <path d="M120 98l105 74 105-74" fill="none" stroke="#E4D7C6" stroke-width="3"/>
+    <rect x="270" y="104" width="40" height="46" rx="3" fill="#2F5D4E"/>
+    <circle cx="290" cy="127" r="12" fill="#E9B949"/><text x="285" y="133" font-family="Georgia,serif" font-size="15" font-weight="700" fill="#8A6414">$</text>
+    <g fill="#C9B8A4"><rect x="150" y="190" width="90" height="6" rx="3"/><rect x="150" y="204" width="70" height="6" rx="3"/></g>
+  </g>
+  <!-- note -->
+  <g transform="rotate(6 120 250)">
+    <rect x="60" y="200" width="130" height="90" rx="4" fill="#FFF6D8"/>
+    <text x="74" y="236" font-family="Caveat,cursive" font-size="26" font-weight="700" fill="#5A3E2F">Questions?</text>
+    <path d="M74 252h96M74 270h70" stroke="#E7C2A0" stroke-width="3" stroke-linecap="round"/>
+  </g>
+  <!-- cup top view -->
+  <circle cx="320" cy="250" r="50" fill="#FFFDF9"/>
+  <circle cx="320" cy="250" r="36" fill="#F1E7DA"/>
+  <rect x="356" y="242" width="30" height="16" rx="8" fill="#FFFDF9"/>
+  <circle cx="320" cy="250" r="32" fill="#FFFDF9" stroke="#E4D7C6" stroke-width="2"/>
+  <circle cx="320" cy="250" r="26" fill="#5A3420"/>
+  <path d="M320 236c-9 0-13 9-7 13s9 11 7 15c11-2 15-11 9-17s-5-10-9-11z" fill="#E7C2A0"/>
+  <g fill="#3B271D"><ellipse cx="40" cy="60" rx="9" ry="6" transform="rotate(-30 40 60)"/><ellipse cx="64" cy="44" rx="9" ry="6" transform="rotate(20 64 44)"/><ellipse cx="226" cy="290" rx="9" ry="6" transform="rotate(40 226 290)"/></g>
+</svg></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <p class="disclaimer">Educational tool only, not financial advice.<br>Please consult a qualified financial planner.</p>
+  <div class="beans" aria-hidden="true"><svg><use href="#bean"/></svg><svg><use href="#bean"/></svg><svg><use href="#bean"/></svg></div>
+  Retirement planning by the EspressoGeek<span class="hide-sm"> · </span><br class="br-m">plan<span class="num">4</span>retirement.ca<br><small>Last updated November <span class="num">2026</span></small>
+
+</footer>
+<script>
+(function(){
+  var m=document.querySelector('a.mail[data-u]');
+  if(m){var a=m.dataset.u+'@'+m.dataset.d;m.href='mailto:'+a;m.textContent=a;}
+  if(!('IntersectionObserver' in window))return;
+  var els=document.querySelectorAll('main section:not(.hero) .wrap > *');
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(el){el.classList.add('reveal');io.observe(el);});
+})();
+</script>
+</body>
+</html>
